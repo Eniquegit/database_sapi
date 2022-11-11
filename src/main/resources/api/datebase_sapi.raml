@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: DBaccount_papi
+types:
+  AccountType: !include DataType/DBdataType.raml
+
+/createaccount:
+  get:
+    queryParameters:
+      accountNumber:
+        required: false
+    responses:
+      200:
+        body:
+         application/json:
+           type: AccountType[]
+           examples:
+             output: !include Examples/getDB.raml
+  post:
+    body:
+      application/json:
+        type: AccountType
+        examples:
+          input: !include Examples/postDB.raml
+    responses:
+      200:
+       body:
+        application/json:
+          example:
+            message: Account created
+  put:
+    body:
+      application/json:
+        type: AccountType
+        examples:
+          input: !include Examples/putDB.raml
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              message: Account updated
+                                                                                                                                          
+                                                    
+                                                                                                                   
+                        
+
