@@ -11,7 +11,10 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</db:config>
 	<flow name="implementationFlow" doc:id="1fd309b3-0272-4d17-b717-19b6a019eedf" >
 		<db:select doc:name="Select" doc:id="677e439b-63d1-453f-a0b3-65448136f683" config-ref="Database_Config">
-			<db:sql ><![CDATA[select * from public."AccountDetails"]]></db:sql>
+			<db:sql ><![CDATA[select * from public."AccountDetails" where AccountNumber=: accountnumber]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	accountnumber: attributes.queryParams.AccountNumber
+}]]]></db:input-parameters>
 		</db:select>
 		<ee:transform doc:name="Transform Message" doc:id="a52a1988-882b-422c-8913-d243bc730057" >
 			<ee:message >
@@ -19,6 +22,31 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="implementationFlow1" doc:id="a0486b75-1b40-4988-a623-9582b0621c7c" >
+		<db:insert doc:name="Insert" doc:id="daf7c26a-6c2a-4637-a726-f9ee31437b3a" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert into public."AccountDetails"(AccountName,AccountNumber,FirstName,MiddleName,LastName,PhoneNumber,Email)
+values(:accountname,:accountnumber,:firstname,:middlename,:lastname,:phonenumber,:email)]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	accountname: payload.AccountName,
+	accountnumber: payload.AccountNumber,
+	firstname: payload.FirstName,
+	middlename: payload.MiddleName,
+	lastname: payload.LastName,
+	phonenumber: payload.PhoneNumber,
+	email: payload.Email
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="1364ab3b-0052-442b-bcaa-75cf3cabf193" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Account Created sucessfully"
+}]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
