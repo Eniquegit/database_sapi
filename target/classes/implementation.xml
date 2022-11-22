@@ -7,9 +7,4 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="cca0d723-a533-4ccc-a4b6-efc7c84de1b0" >
 		<db:generic-connection url="jdbc:postgresql://localhost:5432/POC" driverClassName="org.postgresql.Driver" user="postgres" password="Akhianu@0510" />
 	</db:config>
-	<flow name="implementationFlow" doc:id="f930540e-cd6f-46c5-8dbb-3ae6564e2a55" >
-		<db:select doc:name="Select" doc:id="d1d4e72f-40d2-4e7e-8f20-a120418fb7da" config-ref="Database_Config">
-			<db:sql ><![CDATA[select *from public."Accountdetails"]]></db:sql>
-		</db:select>
-	</flow>
 </mule>
