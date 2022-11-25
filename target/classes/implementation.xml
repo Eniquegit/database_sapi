@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="cca0d723-a533-4ccc-a4b6-efc7c84de1b0" >
 		<db:generic-connection url="jdbc:postgresql://localhost:5432/POC" driverClassName="org.postgresql.Driver" user="postgres" password="Akhianu@0510" />
 	</db:config>
+	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="50d149ed-3491-4039-bc08-4f1a7eb5a44b" environment="${env}" />
+	<configuration-properties doc:name="Configuration properties" doc:id="a70648e6-c7cd-4891-8618-9a1536140070" file="resource.properties" />
+	<flow name="post-db-createAccount-flow" doc:id="b7d159f4-8d20-4fac-a583-e3ef4ade5f87" >
+		<db:insert doc:name="Insert" doc:id="14c4cdb1-0426-4cde-8805-e3af9f716d45" config-ref="Database_Config">
+			<db:sql ><![CDATA[INSERT INTO public."Accountdetails"(
+	"AccountName", "AccountNumber", "FirstName", "MiddleName", "LastName", "Phone", "Email")
+	VALUES (:AccountNumber,:AccountNumber,:FirstName,:MiddleName,:LastName,:Phone,:Email);]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	AccountName: payload.AccountName,
+	AccountNumber: payload.AccountNumber,
+	FirstName: payload.FirstName,
+	MiddleName: payload.MiddleName,
+	LastName: payload.LastName,
+	Phone: payload.Phone,
+	Email: payload.Email
+	
+	
+}]]]></db:input-parameters>
+		</db:insert>
+		<json-logger:logger doc:name="data inserted" doc:id="d32bb59e-26e1-42bb-a1e3-8ad492e16908" config-ref="JSON_Logger_Config" message="data inserted"/>
+	</flow>
 </mule>
