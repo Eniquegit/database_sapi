@@ -6,16 +6,21 @@
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
-	<db:config name="Database_Config" doc:name="Database Config" doc:id="cca0d723-a533-4ccc-a4b6-efc7c84de1b0" >
-		<db:generic-connection url="jdbc:postgresql://localhost:5432/POC" driverClassName="org.postgresql.Driver" user="postgres" password="Akhianu@0510" />
-	</db:config>
-	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="50d149ed-3491-4039-bc08-4f1a7eb5a44b" environment="${env}" />
-	<configuration-properties doc:name="Configuration properties" doc:id="a70648e6-c7cd-4891-8618-9a1536140070" file="resource.properties" />
+	
+	<flow name="get-db-createAccount-flow" doc:id="349e83dd-293e-4f15-b0a2-c7277c2c7339" >
+		<json-logger:logger doc:name="before fetcing" doc:id="f316048c-a4dd-4a09-bf53-faa29371de35" message="before fetcing" config-ref="JSON_Logger_Config"/>
+		<db:select doc:name="Select" doc:id="4426466f-75d9-4d62-a494-27484db38730" config-ref="Database_Config">
+			<db:sql ><![CDATA[#[p('retriveQuery')]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	accountnumber: payload.AccountNumber
+}]]]></db:input-parameters>
+		</db:select>
+		<json-logger:logger doc:name="after fetching" doc:id="2b94249c-98cb-4141-be78-b1ca565a740e" message="after fetching" config-ref="JSON_Logger_Config"/>
+	</flow>
 	<flow name="post-db-createAccount-flow" doc:id="b7d159f4-8d20-4fac-a583-e3ef4ade5f87" >
+		<json-logger:logger doc:name="before insterted" doc:id="817ced7d-37ea-4296-9137-58174a84c70c" message="before insterted" config-ref="JSON_Logger_Config"/>
 		<db:insert doc:name="Insert" doc:id="14c4cdb1-0426-4cde-8805-e3af9f716d45" config-ref="Database_Config">
-			<db:sql ><![CDATA[INSERT INTO public."Accountdetails"(
-	"AccountName", "AccountNumber", "FirstName", "MiddleName", "LastName", "Phone", "Email")
-	VALUES (:AccountNumber,:AccountNumber,:FirstName,:MiddleName,:LastName,:Phone,:Email);]]></db:sql>
+			<db:sql ><![CDATA[#[p('insertQuery')]]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{
 	AccountName: payload.AccountName,
 	AccountNumber: payload.AccountNumber,
@@ -28,6 +33,24 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 	
 }]]]></db:input-parameters>
 		</db:insert>
-		<json-logger:logger doc:name="data inserted" doc:id="d32bb59e-26e1-42bb-a1e3-8ad492e16908" config-ref="JSON_Logger_Config" message="data inserted"/>
+		<json-logger:logger doc:name="after inserted" doc:id="d32bb59e-26e1-42bb-a1e3-8ad492e16908" message="after inserted" config-ref="JSON_Logger_Config"/>
+	</flow>
+	<flow name="put-db-createAccount-flow" doc:id="31679bd5-1cf8-404a-9061-ac3a99fea383" >
+		<json-logger:logger doc:name="before updating" doc:id="a6dbc56f-5de5-49b1-aa2e-009b2316cf95" message="before updating" config-ref="JSON_Logger_Config"/>
+		<db:update doc:name="Update" doc:id="b753b068-85e7-42a6-8cc8-f829b64a8c4b" config-ref="Database_Config">
+			<db:sql ><![CDATA[#[p('updateQuery')]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	AccountName: payload.AccountName,
+	AccountNumber: payload.AccountNumber,
+	FirstName: payload.FirstName,
+	MiddleName: payload.MiddleName,
+	LastName: payload.LastName,
+	Phone: payload.Phone,
+	Email: payload.Email
+	
+	
+}]]]></db:input-parameters>
+		</db:update>
+		<json-logger:logger doc:name="after updating" doc:id="118a3597-1aab-4fbf-8c57-0234bc6df33c" message="after updating" config-ref="JSON_Logger_Config"/>
 	</flow>
 </mule>

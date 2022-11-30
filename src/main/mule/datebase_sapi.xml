@@ -124,10 +124,10 @@ output application/json
         </error-handler>
     </flow>
     <flow name="put:\createaccount:application\json:datebase_sapi-config">
-		<flow-ref doc:name="Flow Reference" doc:id="7e861f9f-5aca-4fbf-a6bc-1d8f5c688bcf" name="post-db-createAccount-flow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="7e861f9f-5aca-4fbf-a6bc-1d8f5c688bcf" name="put-db-createAccount-flow"/>
     </flow>
     <flow name="get:\createaccount:datebase_sapi-config">
-		<flow-ref doc:name="Flow Reference" doc:id="1def6778-e02e-4c81-985c-ffb1ca8bbf8b" name="post-db-createAccount-flow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="2873880b-e20d-4c03-bd5e-b5e16de246ef" name="get-db-createAccount-flow"/>
     </flow>
     <flow name="post:\createaccount:application\json:datebase_sapi-config">
 		<flow-ref doc:name="post-db-createAccount-flow" doc:id="6d54aa0c-ad6d-49a4-ba05-f92706a0a81d" name="post-db-createAccount-flow"/>

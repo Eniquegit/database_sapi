@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="6fac410e-44b5-4efc-81ba-b3c734fb510e" environment="${env}" />
+	<configuration-properties doc:name="Configuration properties" doc:id="a2202d1d-d4c5-411c-b11f-506df5e0ef75" file="resource.properties" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="d6f143cb-a8da-48dd-a75e-5bee487fbdc2" >
+		<db:generic-connection url="${dbURL}" driverClassName="${driverclassname}" user="${dbName}" password="${dbPwd}" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="d5625593-4f1c-463f-b1b8-78d67de2d380" file="${env}.properties" />
+</mule>
