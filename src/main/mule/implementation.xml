@@ -29,8 +29,6 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 	LastName: payload.LastName,
 	Phone: payload.Phone,
 	Email: payload.Email
-	
-	
 }]]]></db:input-parameters>
 		</db:insert>
 		<json-logger:logger doc:name="after inserted" doc:id="d32bb59e-26e1-42bb-a1e3-8ad492e16908" message="after inserted" config-ref="JSON_Logger_Config"/>
