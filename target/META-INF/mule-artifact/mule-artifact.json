@@ -20,12 +20,14 @@
         "api/Examples/postDB.raml",
         "api/Examples/putDB.raml",
         "application-types.xml",
+        "client-truststore.jks",
         "config.xml",
         "datebase_sapi.xml",
         "implementation.xml",
         "log4j2.xml",
         "resource.properties",
         "sandbox.properties",
+        "server-keystore.jks",
         "staging.properties"
       ]
     }

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
-    <http:listener-config name="datebase_sapi-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8083" />
-    </http:listener-config>
+    
     <apikit:config name="datebase_sapi-config" api="datebase_sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="datebase_sapi-main">
         <http:listener config-ref="datebase_sapi-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
             <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body>#[payload]</http:body>
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
         <apikit:router config-ref="datebase_sapi-config" />
@@ -99,11 +97,11 @@ output application/json
     <flow name="datebase_sapi-console">
         <http:listener config-ref="datebase_sapi-httpListenerConfig" path="/console/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
             <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body>#[payload]</http:body>
-                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
         <apikit:console config-ref="datebase_sapi-config" />
@@ -124,10 +122,10 @@ output application/json
         </error-handler>
     </flow>
     <flow name="put:\createaccount:application\json:datebase_sapi-config">
-		<flow-ref doc:name="Flow Reference" doc:id="7e861f9f-5aca-4fbf-a6bc-1d8f5c688bcf" name="put-db-createAccount-flow"/>
+		<flow-ref doc:name="put-db-createAccount-flow" doc:id="7e861f9f-5aca-4fbf-a6bc-1d8f5c688bcf" name="put-db-createAccount-flow"/>
     </flow>
     <flow name="get:\createaccount:datebase_sapi-config">
-		<flow-ref doc:name="Flow Reference" doc:id="2873880b-e20d-4c03-bd5e-b5e16de246ef" name="get-db-createAccount-flow"/>
+		<flow-ref doc:name="get-db-createAccount-flow" doc:id="2873880b-e20d-4c03-bd5e-b5e16de246ef" name="get-db-createAccount-flow"/>
     </flow>
     <flow name="post:\createaccount:application\json:datebase_sapi-config">
 		<flow-ref doc:name="post-db-createAccount-flow" doc:id="6d54aa0c-ad6d-49a4-ba05-f92706a0a81d" name="post-db-createAccount-flow"/>
