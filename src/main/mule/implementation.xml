@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 	accountnumber: payload.AccountNumber
 }]]]></db:input-parameters>
 		</db:select>
-		<json-logger:logger doc:name="after fetching" doc:id="2b94249c-98cb-4141-be78-b1ca565a740e" message="after fetching" config-ref="JSON_Logger_Config"/>
+		<json-logger:logger doc:name="after fetching" doc:id="2b94249c-98cb-4141-be78-b1ca565a740e" message="after fetching" config-ref="JSON_Logger_Config" />
 	</flow>
 	<flow name="post-db-createAccount-flow" doc:id="b7d159f4-8d20-4fac-a583-e3ef4ade5f87" >
 		<json-logger:logger doc:name="before insterted" doc:id="817ced7d-37ea-4296-9137-58174a84c70c" message="before insterted" config-ref="JSON_Logger_Config"/>
